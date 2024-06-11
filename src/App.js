@@ -9,6 +9,7 @@ import DocumentUpload from './Components/DocumentUpload';
 import RentingPrice from './Components/rentingPrice';
 import BikeDocument from './Components/BikeDocument';
 import Compliance from './Components/Compliance';
+import ThankYouPage from './Components/Thankyou';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path='/renting' element={<RentingPrice></RentingPrice>} />
       <Route path='/BikeDocument' element={<BikeDocument />} />
       <Route path='/Compliance' element={<Compliance />} />
+      <Route path='/thankyou' element={<ThankYouPage />} />
     </Routes>
     </>
   );

@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProgressBar from './progressBar';
+import { motion } from 'framer-motion';
 
 const Compliance = () => {
     const [insurance, setInsurance] = useState(null);
@@ -13,15 +14,23 @@ const Compliance = () => {
     const handleNextClick = (e) => {
         e.preventDefault()
         setProgress((prevProgress) => Math.min(prevProgress + 1, 7))
-        navigate("/Compliance")
+        navigate("/thankyou")
     }
       const handleFileChange = (setter) => (e) => {
         setter(e.target.files[0]);
       };
 
   return (
-    <div className="flex justify-center items-center w-full h-screen bg-gray-100">
-    <form className="bg-white border border-gray-300 shadow-lg rounded-lg flex flex-col justify-center items-center p-10 w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3">
+    <div className="flex justify-center items-center w-full h-screen bg-gray-100"> 
+    <motion.form
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0 }}
+          transition={{ duration: 0.5 }}
+          className='bg-white border border-gray-300 shadow-lg rounded-lg flex flex-col justify-center items-center p-10 w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3'
+          
+      >
+        
     <h1 className="mb-5 text-3xl font-extrabold text-gray-900 md:text-5xl lg:text-xl">
             Rent<span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> myRide</span>
           </h1>
@@ -68,9 +77,13 @@ const Compliance = () => {
             Next
           </button>
 
-    </form>
-        
+      </motion.form>
+
     </div>
+
+    
+    
+        
   )
 }
 

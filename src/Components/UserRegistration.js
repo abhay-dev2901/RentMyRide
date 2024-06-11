@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import ProgressBar from './progressBar';
@@ -20,7 +21,13 @@ const UserRegistration = () => {
 
     return (
         <div className='flex justify-center items-center w-full h-screen bg-gray-100'>
-            <form className="bg-white border border-gray-300 shadow-lg rounded-lg flex flex-col justify-center items-center p-5 sm:p-10 w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3">
+            <motion.form
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white border border-gray-300 shadow-lg rounded-lg flex flex-col justify-center items-center p-5 sm:p-10 w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3"
+            >
                 <h1 className="mb-5 text-3xl font-extrabold text-gray-900 md:text-5xl lg:text-4xl">
                     Rent<span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> myRide</span>
                 </h1>
@@ -78,7 +85,7 @@ const UserRegistration = () => {
                     Next
                 </button>
                 
-            </form>
+            </motion.form>
         </div>
     )
 }
