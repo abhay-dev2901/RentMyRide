@@ -50,25 +50,26 @@ Make sure you have the following software installed on your local machine:
     
    Open http://localhost:3000 to view the application in your browser.
 
-Project Structure:
-bike-rental-onboarding/
-├── public/
-│   ├── index.html
-│   └── ...
-├── src/
-│   ├── Components/
-│   │   ├── Home.js
-│   │   ├── UserRegistration.js
-│   │   ├── UserProfileSetup.js
-│   │   ├── BikeListing.js
-│   │   ├── DocumentUpload.js
-│   │   ├── RentingPrice.js
-│   │   ├── BikeDocument.js
-│   │   ├── Compliance.js
-│   │   └── ThankYouPage.js
-│   ├── App.js
-│   ├── App.css
-│   ├── index.js
-│   ├── logo.svg
-│   └── ...
+#Project Structure
+
+#bike-rental-onboarding/
+#├── public/
+#│   ├── index.html
+#│   └── ...
+#├── src/
+#│   ├── Components/
+#│   │   ├── Home.js
+#│   │   ├── UserRegistration.js
+#│   │   ├── UserProfileSetup.js
+#│   │   ├── BikeListing.js
+#│   │   ├── DocumentUpload.js
+#│   │   ├── RentingPrice.js
+#│   │   ├── BikeDocument.js
+#│   │   ├── Compliance.js
+#│   │   └── ThankYouPage.js
+#│   ├── App.js
+#│   ├── App.css
+#│   ├── index.js
+#│   ├── logo.svg
+#│   └── ...
 └── package.json
