@@ -4,20 +4,36 @@ import { motion } from 'framer-motion';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import ProgressBar from './progressBar';
-import bikeImage from "../Components/Photos/360_F_322712645_JFiBlbE3w1qdds8yiDJnHFuunwePhWFq.jpg";
-import bikeImage2 from "../Components/Photos/Ladies-in-Ladakh.008.jpg";
-import bikeImage3 from "../Components/Photos/2022-rebel-abs-300-gallery-04-2400xauto_jpg.avif";
-import bikeImage4 from "../Components/Photos/Guide-to-Group-Riding-1.jpg";
 
 const UserRegistration = () => {
     const navigate = useNavigate();
     const [progress, setProgress] = useState(1);
+    const [name, setName] = useState("");
+    const [last, setLast] = useState("");
+    const [email, setEmail] = useState("");
+    const [phn, setPhn] = useState("");
+    const [error, setError] = useState("");
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        if (id === "name") setName(value);
+        if (id === "lastname") setLast(value);
+        if (id === "email") setEmail(value);
+        if (id === "phone") setPhn(value);
+    };
 
     const handleNextClick = (e) => {
         e.preventDefault();
-        setProgress((prevProgress) => Math.min(prevProgress + 1, 7));
-        navigate("/profileSetup");
-    }
+
+        if (!email || !name || !last || !phn) {
+            setError("Please fill all the required fields");
+            return;
+        } else {
+            setError(""); // Clear the error
+            setProgress((prevProgress) => Math.min(prevProgress + 1, 7));
+            navigate("/profileSetup");
+        }
+    };
 
     return (
         <div className='flex justify-center items-center w-full h-screen bg-gray-100'>
@@ -35,7 +51,13 @@ const UserRegistration = () => {
                 <h1 className='mb-5 text-2xl font-semibold text-gray-900 md:text-3xl lg:text-2xl'>Finish Your Profile</h1>
 
                 <ProgressBar progress={progress}></ProgressBar>
-                
+
+                {error && (
+                    <div className="mb-5 w-full text-red-600 text-sm">
+                        {error}
+                    </div>
+                )}
+
                 <div className="mb-5 w-full">
                     <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">First Name <span>*</span></label>
                     <input
@@ -43,6 +65,8 @@ const UserRegistration = () => {
                         id="name"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         placeholder="Your first name"
+                        onChange={handleChange}
+                        value={name}
                         required
                     />
                 </div>
@@ -50,9 +74,11 @@ const UserRegistration = () => {
                     <label htmlFor="lastname" className="block mb-2 text-sm font-medium text-gray-900">Last Name <span>*</span></label>
                     <input
                         type="text"
+                        value={last}
                         id="lastname"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         placeholder='Your last name'
+                        onChange={handleChange}
                         required
                     />
                 </div>
@@ -62,8 +88,10 @@ const UserRegistration = () => {
                     <input
                         type="email"
                         id="email"
+                        value={email}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         placeholder='name@flowbite.com'
+                        onChange={handleChange}
                         required
                     />
                 </div>
@@ -71,9 +99,11 @@ const UserRegistration = () => {
                     <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900">Phone <span>*</span></label>
                     <PhoneInput
                         containerClass="mb-2 w-full"
+                        value={phn}
                         inputClass="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         buttonClass="border-l border-gray-300"
                         dropdownClass="bg-white border border-gray-300 rounded-lg shadow-lg"
+                        onChange={(value) => setPhn(value)}
                         country={"in"}
                     />
                 </div>
@@ -91,3 +121,6 @@ const UserRegistration = () => {
 }
 
 export default UserRegistration;
+
+
+

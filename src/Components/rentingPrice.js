@@ -1,47 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 import { useNavigate } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import { useState } from 'react';
 import ProgressBar from './progressBar';
 import { motion } from 'framer-motion';
 
 const RentingPrice = () => {
     const navigate = useNavigate();
     const [progress, setProgress] = useState(5);
+    const [rentalPriceDaily, setRentalPriceDaily] = useState('');
+    const [rentalPriceWeekly, setRentalPriceWeekly] = useState('');
+    const [rentalPriceMonthly, setRentalPriceMonthly] = useState('');
+    const [availabilitySchedule, setAvailabilitySchedule] = useState('');
     const [minDuration, setMinDuration] = useState('');
     const [maxDuration, setMaxDuration] = useState('');
+    const [error, setError] = useState('');
 
     const handleNextClick = (e) => {
         e.preventDefault();
-        setProgress((prevProgress) => Math.min(prevProgress + 1, 7));
-        navigate("/BikeDocument");
+
+        if (!rentalPriceDaily || !rentalPriceWeekly || !rentalPriceMonthly || !availabilitySchedule || !minDuration || !maxDuration) {
+            setError("Please fill all the required fields");
+            return;
+        } else {
+            setError(""); // Clear the error
+            setProgress((prevProgress) => Math.min(prevProgress + 1, 7));
+            navigate("/BikeDocument");
+        }
     };
 
-    const handleMinDurationChange = (e) => {
-        setMinDuration(e.target.value);
-    };
-
-    const handleMaxDurationChange = (e) => {
-        setMaxDuration(e.target.value);
+    const handleInputChange = (setter) => (value) => {
+        setter(value);
     };
 
     return (
         <div className='flex justify-center items-center w-full h-screen bg-gray-100'>
             <motion.form
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{ duration: 0.5 }}
-            className="bg-white border border-gray-300 shadow-lg rounded-lg flex flex-col justify-center items-center p-10 w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3"
-        >
-            
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                transition={{ duration: 0.5 }}
+                className="bg-white border border-gray-300 shadow-lg rounded-lg flex flex-col justify-center items-center p-10 w-11/12 sm:w-2/3 md:w-1/2 lg:w-1/3"
+            >
                 <h1 className="mb-5 text-3xl font-extrabold text-gray-900 md:text-5xl lg:text-xl">
                     Rent<span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"> myRide</span>
                 </h1>
 
                 <h1 className="mb-5 text-2xl font-bold text-gray-900 md:text-5xl lg:text-2xl">Rental Info</h1>
                 <ProgressBar progress={progress}></ProgressBar>
+
+                {error && (
+                    <div className="mb-5 w-full text-red-600 text-sm">
+                        {error}
+                    </div>
+                )}
 
                 <div className="mb-5 w-full">
                     <label htmlFor="rentalPriceDaily" className="block mb-2 text-sm font-medium text-gray-900">
@@ -53,6 +64,8 @@ const RentingPrice = () => {
                         placeholder="Enter daily rental price"
                         decimalsLimit={2}
                         prefix="₹"
+                        value={rentalPriceDaily}
+                        onValueChange={handleInputChange(setRentalPriceDaily)}
                         required
                     />
                 </div>
@@ -67,6 +80,8 @@ const RentingPrice = () => {
                         placeholder="Enter weekly rental price"
                         decimalsLimit={2}
                         prefix="₹"
+                        value={rentalPriceWeekly}
+                        onValueChange={handleInputChange(setRentalPriceWeekly)}
                         required
                     />
                 </div>
@@ -81,6 +96,8 @@ const RentingPrice = () => {
                         placeholder="Enter monthly rental price"
                         decimalsLimit={2}
                         prefix="₹"
+                        value={rentalPriceMonthly}
+                        onValueChange={handleInputChange(setRentalPriceMonthly)}
                         required
                     />
                 </div>
@@ -94,6 +111,8 @@ const RentingPrice = () => {
                         id="availabilitySchedule"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         placeholder="Enter availability schedule"
+                        value={availabilitySchedule}
+                        onChange={(e) => setAvailabilitySchedule(e.target.value)}
                         required
                     />
                 </div>
@@ -106,7 +125,7 @@ const RentingPrice = () => {
                         type="number"
                         id="minDuration"
                         value={minDuration}
-                        onChange={handleMinDurationChange}
+                        onChange={(e) => setMinDuration(e.target.value)}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         placeholder="Enter minimum rental duration"
                         required
@@ -121,7 +140,7 @@ const RentingPrice = () => {
                         type="number"
                         id="maxDuration"
                         value={maxDuration}
-                        onChange={handleMaxDurationChange}
+                        onChange={(e) => setMaxDuration(e.target.value)}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         placeholder="Enter maximum rental duration"
                         required
@@ -135,11 +154,8 @@ const RentingPrice = () => {
                 >
                     Next
                 </button>
-            
-        </motion.form>
-
+            </motion.form>
         </div>
-        
     );
 };
 

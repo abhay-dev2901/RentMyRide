@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import ProgressBar from './progressBar';
-import { useState } from 'react';
 
 const DocumentUpload = () => {
     const navigate = useNavigate();
     const [progress, setProgress] = useState(3);
+    const [profilePicture, setProfilePicture] = useState("");
+    const [bankAccountNumber, setBankAccountNumber] = useState("");
+    const [error, setError] = useState("");
+
+    const handleFileChange = (e) => {
+        setProfilePicture(e.target.files[0]);
+    };
+
+    const handleInputChange = (e) => {
+        const { id, value } = e.target;
+        if (id === "bankAccountNumber") setBankAccountNumber(value);
+    };
 
     const handleNextClick = (e) => {
         e.preventDefault();
-        setProgress((prevProgress) => Math.min(prevProgress + 1, 7));
-        navigate("/bikelisting");
-    }
+
+        if (!profilePicture || !bankAccountNumber) {
+            setError("Please fill all the required fields");
+            return;
+        } else {
+            setError(""); // Clear the error
+            setProgress((prevProgress) => Math.min(prevProgress + 1, 7));
+            navigate("/bikelisting");
+        }
+    };
 
     return (
         <div className='flex justify-center items-center w-full h-screen bg-gray-100'>
@@ -29,6 +47,12 @@ const DocumentUpload = () => {
                 
                 <h1 className='mb-5 text-2xl font-semibold text-gray-900 md:text-5xl lg:text-2xl'>Profile Setup</h1>
                 <ProgressBar progress={progress}></ProgressBar>
+
+                {error && (
+                    <div className="mb-5 w-full text-red-600 text-sm">
+                        {error}
+                    </div>
+                )}
                 
                 <div className="mb-5 w-full">
                     <label htmlFor="profilePicture" className="block mb-2 text-sm font-medium text-gray-900">Profile Picture/Business Logo <span>*</span></label>
@@ -37,6 +61,7 @@ const DocumentUpload = () => {
                         id="profilePicture"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         accept="image/*"
+                        onChange={handleFileChange}
                         required
                     />
                 </div>
@@ -45,6 +70,8 @@ const DocumentUpload = () => {
                     <input
                         type="text"
                         id="bankAccountNumber"
+                        value={bankAccountNumber}
+                        onChange={handleInputChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                         placeholder="Bank account number"
                         required
