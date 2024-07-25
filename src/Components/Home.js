@@ -59,12 +59,12 @@ const HomePage = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row justify-around mb-10 space-y-5 sm:space-y-0 sm:space-x-5"
         >
-          <button
+          {/* <button
             onClick={handleRentBikeClick}
             className="text-white bg-gradient-to-r from-sky-400 to-emerald-600 hover:from-sky-600 hover:to-emerald-800 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-base sm:text-lg px-8 py-3 transition duration-300 ease-in-out"
           >
             Rent a Bike
-          </button>
+          </button> */}
           <button
             onClick={handleBecomeProviderClick}
             className="text-white bg-gradient-to-r from-green-400 to-teal-600 hover:from-green-600 hover:to-teal-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-base sm:text-lg px-8 py-3 transition duration-300 ease-in-out"
